@@ -3,8 +3,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext, MdToday } from "react-icons/md";
 import { fr } from 'date-fns/locale'; // Import your locales
 import { format } from 'date-fns';
-import * as Utils from "@/libs/utils";
-import * as Constants from "@/libs/constants";
+import * as Utils from "./libs/utils";
+import * as Constants from "./libs/constants";
 // Helper function to generate days of the week
 var generateWeekDays = function (locale) {
     var weekdays = Array.from({ length: 7 }, function (_, i) { return i; });

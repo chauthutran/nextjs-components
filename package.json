@@ -1,6 +1,6 @@
 {
   "name": "nextjs-jc-calendar",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A reusable component for Next.js",
   "scripts": {
     "build": "tsc",
