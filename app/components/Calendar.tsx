@@ -5,6 +5,7 @@ import { MdNavigateNext, MdToday } from "react-icons/md";
 import { enUS, es, fr, de } from 'date-fns/locale'; // Import your locales
 import { format } from 'date-fns';
 import * as Utils from "@/libs/utils";
+import * as Constants from "@/libs/constants";
 
 
 // Define type for supported locales
@@ -187,7 +188,7 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 				{calendarDays.map((day, index) => (
 					<div
 						key={index}
-						className={`relative border border-gray-300 ${day ? 'cursor-pointer' : ''} flex flex-col`}
+						className={`relative border border-gray-300 ${day ? 'cursor-pointer' : 'bg-gray-100'} flex flex-col`}
 					>
 						{day ? (
 							<div className="relative flex flex-col h-[100px]">
@@ -198,7 +199,7 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 								<div className="flex-1 pt-6 items-start">
 									<ul className="list-none space-y-1 text-xs mt-4 px-1">
 										{filterEvents(day).length > 0 &&
-											<li className="truncate bg-blue-200 p-1 rounded-sm">{filterEvents(day)[0].title}</li>
+											<li className={`truncate p-1 rounded-sm`} style={{backgroundColor: filterEvents(day)[0] === undefined ? Constants.DEFAULT_COLOR : filterEvents(day)[0].color }}>{filterEvents(day)[0].title}</li>
 										}
 										{filterEvents(day).length > 1 &&
 											<li className="truncate bg-blue-200 p-1 rounded-sm">More {filterEvents(day).length - 1} event{filterEvents(day).length > 2 && 's'}</li>
@@ -206,7 +207,7 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 									</ul>
 								</div>
 							</div>
-						) : <div className="bg-gray-400"></div>}
+						) : ""}
 					</div>
 				))}
 			</div>

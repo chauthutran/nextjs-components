@@ -9,11 +9,13 @@ const events = [
 		title: 'Meeting with Bob',
 		start: new Date(2024, 7, 15, 10, 0), // YYYY, MM, DD, HH, MM
 		end: new Date(2024, 7, 15, 11, 0),
+		color: "#ff00ff"
 	},
 	{
 		title: 'Dinner with Honey',
 		start: new Date(2024, 7, 15, 20, 0), // YYYY, MM, DD, HH, MM
 		end: new Date(2024, 7, 15, 20, 0),
+		color: "#ff0f0f"
 	},
 	{
 		title: 'Lunch with Alice',

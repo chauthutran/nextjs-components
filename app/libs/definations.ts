@@ -6,9 +6,11 @@ export interface MonthType {
 	name: string;
 }
 
+
+
 export interface EventType {
 	title: string;
 	start: Date;
 	end: Date;
+	color?: string;
 }
-  
