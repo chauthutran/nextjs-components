@@ -63,15 +63,6 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	const [selectedMonth, setSelectedMonth] = useState<number>(0);
 	const [selectedYear, setSelectedYear] = useState<number>(0);
 
-
-	const [currentDate, setCurrentDate] = useState(new Date());
-	const [eventTitle, setEventTitle] = useState('');
-	const [startDate, setStartDate] = useState<Date | null>(null);
-	const [endDate, setEndDate] = useState<Date | null>(null);
-
-	// const selectedYear = currentDate.getFullYear();
-	// const selectedMonth = currentDate.getMonth(); // Months are zero-indexed
-
 	const weekDays = generateWeekDays(locale);
 	const months: JSONObject[] = generateMonths(locale);
 
@@ -101,21 +92,6 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	// Generate calendar days
 	const calendarDays = generateCalendarDays();
 	
-	// Handle adding events
-	const handleAddEvent = () => {
-		if (startDate && endDate && eventTitle) {
-			const newEvent: EventType = {
-				title: eventTitle,
-				start: startDate,
-				end: endDate,
-			};
-			events.push(newEvent);
-			setEventTitle('');
-			setStartDate(null);
-			setEndDate(null);
-		}
-	};
-
 	// Check if a date is within any event range
 	const isDateInRange = (date: Date) => {
 		return events.some(event =>
@@ -131,10 +107,15 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 		setSelectedYear(parseInt( e.target.value ))
 	}
 
+	const filterEvents = (day: number): EventType[] => {
+		return events.filter(event => event.start.getDate() === day && (event.start.getMonth() + 1) === selectedMonth 
+			&& event.start.getFullYear() === selectedYear );
+	}
+
 	const curDate = new Date();
 	
 	return (
-		<div className="w-full flex items-center justify-center flex-col">
+		<div className="w-full h-full items-center justify-center">
 			<h2 className="flex items-center justify-between text-xl font-semibold mb-4 w-full">
 				<div className="flex-1 flex items-center justify-center space-x-8">
 					<div className="cursor-pointer">
@@ -173,29 +154,31 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 				</div>
 			</h2>
 
-			<div className="grid grid-cols-7 text-center">
-				{weekDays.map((day) => (
-					<div key={day} className="p-2 font-medium text-black border border-gray-300 bg-gray-200 text-sm">
+			<div className="grid grid-cols-7">
+				{weekDays.map((day: string) => (
+					<div key={day} className="p-1 text-center font-medium text-black border border-gray-300 bg-gray-200 text-sm">
 						{day}
 					</div>
 				))}
 				{calendarDays.map((day, index) => (
 					<div
 						key={index}
-						className={`relative border border-gray-300 ${day ? 'cursor-pointer' : ''} ${isDateInRange(new Date(selectedYear, selectedMonth, day || 1)) ? 'bg-blue-100' : 'bg-white'} flex flex-col`}
-						onClick={() => day && setStartDate(new Date(selectedYear, selectedMonth, day))}
+						className={`relative border border-gray-300 ${day ? 'cursor-pointer' : ''} flex flex-col`}
 					>
 						{day ? (
-							<div className="relative flex flex-col h-[70px] p-2">
+							<div className="relative flex flex-col h-[100px]">
 								<div className="absolute top-2 right-2 text-lg text-gray-800">
-									{curDate.getFullYear() == selectedYear && (curDate.getMonth() + 1) == selectedMonth && curDate.getDate() === day ? <span className="rounded-full bg-blue-300 p-2">{day}</span> : <>{day}</>}
-									{/* {day} */}
+									{curDate.getFullYear() == selectedYear && (curDate.getMonth() + 1) == selectedMonth && curDate.getDate() === day ? <span className="rounded-full bg-blue-300 p-1">{day}</span> : <>{day}</>}
+									
 								</div>
-								<div className="flex-1 pt-6">
-									<ul className="list-none space-y-1 text-xs my-2">
-										{events.filter(event => event.start.getDate() === day && (event.start.getMonth() + 1) === selectedMonth).map((event, idx) => (
-											<li key={idx} className="truncate bg-blue-200 p-1 rounded-sm">{event.title}</li>
-										))}
+								<div className="flex-1 pt-6 items-start">
+									<ul className="list-none space-y-1 text-xs mt-4">
+										{filterEvents(day).length > 0 && 
+											<li className="truncate bg-blue-200 p-1 rounded-sm">{filterEvents(day)[0].title}</li>
+										}
+										{filterEvents(day).length > 1 && 
+											<li className="truncate bg-blue-200 p-1 rounded-sm">More {filterEvents(day).length - 1} event(s)</li>
+										}
 									</ul>
 								</div>
 							</div>
@@ -203,30 +186,6 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 					</div>
 				))}
 			</div>
-			{/* <div style={{ marginTop: '20px' }}>
-				<input
-					type="text"
-					value={eventTitle}
-					onChange={(e) => setEventTitle(e.target.value)}
-					placeholder="Event title"
-				/>
-				<input
-					type="date"
-					value={startDate ? startDate.toISOString().substring(0, 10) : ''}
-					onChange={(e) => setStartDate(new Date(e.target.value))}
-				/>
-				<input
-					type="date"
-					value={endDate ? endDate.toISOString().substring(0, 10) : ''}
-					onChange={(e) => setEndDate(new Date(e.target.value))}
-				/>
-				<button onClick={handleAddEvent}>Add Event</button>
-			</div> */}
-			{/* <div style={{ marginTop: '10px' }}>
-				{startDate && endDate && (
-					<strong>{`Event from ${startDate.toDateString()} to ${endDate.toDateString()}`}</strong>
-				)}
-			</div> */}
 		</div>
 	);
 };
