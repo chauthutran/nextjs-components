@@ -58,25 +58,25 @@ const defaultLocale: LocaleType = fr;
 
 const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) => {
 
-	const monthRef = useRef(null);
-	const yearRef = useRef(null);
-
 	const [selectedMonth, setSelectedMonth] = useState<number>(0);
 	const [selectedYear, setSelectedYear] = useState<number>(0);
 
 	const weekDays = generateWeekDays(locale);
 	const months: JSONObject[] = generateMonths(locale);
 
+	const setCurrentMonth = () => {
+		var curDate = new Date();
+		setSelectedMonth(curDate.getMonth() + 1);
+		setSelectedYear(curDate.getFullYear());
+	}
 
 	useEffect(() => {
-		var curDate = new Date();
-		setSelectedMonth( curDate.getMonth() + 1);
-		setSelectedYear( curDate.getFullYear() );
-	},[]);
+		setCurrentMonth();
+	}, []);
 
 	const generateCalendarDays = (): (number | null)[] => {
-		
-		const startDay = getStartDay(selectedYear, selectedMonth );
+
+		const startDay = getStartDay(selectedYear, selectedMonth);
 		const daysInMonth = getDaysInMonth(selectedYear, selectedMonth);
 
 		const calendarDays = [];
@@ -91,28 +91,28 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	}
 
 	const handlePrevBtnClick = () => {
-		 if( selectedMonth == 1 ) {
+		if (selectedMonth == 1) {
 			setSelectedMonth(12);
-			setSelectedYear( selectedYear - 1);
-		 }
-		 else {
-			setSelectedMonth(selectedMonth - 1 );
-		 }
+			setSelectedYear(selectedYear - 1);
+		}
+		else {
+			setSelectedMonth(selectedMonth - 1);
+		}
 	}
 
 	const handleNextBtnClick = () => {
-		if( selectedMonth == 12 ) {
-		   setSelectedMonth(1);
-		   setSelectedYear( selectedYear + 1);
+		if (selectedMonth == 12) {
+			setSelectedMonth(1);
+			setSelectedYear(selectedYear + 1);
 		}
 		else {
-		   setSelectedMonth(selectedMonth + 1 );
+			setSelectedMonth(selectedMonth + 1);
 		}
-   }
+	}
 
 	// Generate calendar days
 	const calendarDays = generateCalendarDays();
-	
+
 	// // Check if a date is within any event range
 	// const isDateInRange = (date: Date) => {
 	// 	return events.some(event =>
@@ -121,28 +121,28 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	// };
 
 	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedMonth(parseInt( e.target.value ));
+		setSelectedMonth(parseInt(e.target.value));
 	}
 
 	const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedYear(parseInt( e.target.value ))
+		setSelectedYear(parseInt(e.target.value))
 	}
 
 	const filterEvents = (day: number): EventType[] => {
-		return events.filter(event => event.start.getDate() === day && (event.start.getMonth() + 1) === selectedMonth 
-			&& event.start.getFullYear() === selectedYear );
+		return events.filter(event => event.start.getDate() === day && (event.start.getMonth() + 1) === selectedMonth
+			&& event.start.getFullYear() === selectedYear);
 	}
 
 	const curDate = new Date();
-	
-	const title = Utils.findItemFromList(months, selectedMonth, "id" );
+
+	const title = Utils.findItemFromList(months, selectedMonth, "id");
 
 	return (
 		<div className="w-full h-full items-center justify-center">
 			<h2 className="flex items-center justify-between mb-4 w-full">
 				<div className="flex-1 flex items-center justify-center space-x-8">
-					<div className="cursor-pointer">
-						<IoIosArrowBack onClick={(e) => handlePrevBtnClick()} />
+					<div className="cursor-pointer" onClick={(e) => handlePrevBtnClick()}>
+						<IoIosArrowBack />
 					</div>
 					<div className="cursor-pointer">
 						{title && title.name} {selectedYear}
@@ -167,13 +167,13 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 							))}
 						</select>  */}
 					</div>
-					<div className="cursor-pointer">
-						<MdNavigateNext onClick={() => handleNextBtnClick() }/>
+					<div className="cursor-pointer" onClick={() => handleNextBtnClick()}>
+						<MdNavigateNext />
 					</div>
 				</div>
 
 				{/* Right-Aligned Button */}
-				<div className="ml-auto cursor-pointer">
+				<div className="ml-auto cursor-pointer" onClick={() => setCurrentMonth()}>
 					<MdToday size={24} />
 				</div>
 			</h2>
@@ -193,15 +193,15 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 							<div className="relative flex flex-col h-[100px]">
 								<div className="absolute top-2 right-2 text-lg text-gray-800">
 									{curDate.getFullYear() == selectedYear && (curDate.getMonth() + 1) == selectedMonth && curDate.getDate() === day ? <span className="rounded-full bg-blue-300 p-1">{day}</span> : <>{day}</>}
-									
+
 								</div>
 								<div className="flex-1 pt-6 items-start">
 									<ul className="list-none space-y-1 text-xs mt-4 px-1">
-										{filterEvents(day).length > 0 && 
+										{filterEvents(day).length > 0 &&
 											<li className="truncate bg-blue-200 p-1 rounded-sm">{filterEvents(day)[0].title}</li>
 										}
-										{filterEvents(day).length > 1 && 
-											<li className="truncate bg-blue-200 p-1 rounded-sm">More {filterEvents(day).length - 1} event{filterEvents(day).length > 2}</li>
+										{filterEvents(day).length > 1 &&
+											<li className="truncate bg-blue-200 p-1 rounded-sm">More {filterEvents(day).length - 1} event{filterEvents(day).length > 2 && 's'}</li>
 										}
 									</ul>
 								</div>
