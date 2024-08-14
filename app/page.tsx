@@ -24,7 +24,7 @@ const events = [
 
 export default function Home() {
 	return (
-		<main className="m-5 flex w-[700px] h-[700px] flex-col items-center justify-between bg-white">
+		<main className="m-5 flex w-[700px] h-[700px] flex-col items-center justify-between bg-white p-4">
 			<Calendar events={events} locale={enUS} />
 		</main>
 	);

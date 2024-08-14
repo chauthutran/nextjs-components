@@ -4,6 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext, MdToday } from "react-icons/md";
 import { enUS, es, fr, de } from 'date-fns/locale'; // Import your locales
 import { format } from 'date-fns';
+import * as Utils from "@/libs/utils";
 
 
 // Define type for supported locales
@@ -89,15 +90,35 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 		return calendarDays;
 	}
 
+	const handlePrevBtnClick = () => {
+		 if( selectedMonth == 1 ) {
+			setSelectedMonth(12);
+			setSelectedYear( selectedYear - 1);
+		 }
+		 else {
+			setSelectedMonth(selectedMonth - 1 );
+		 }
+	}
+
+	const handleNextBtnClick = () => {
+		if( selectedMonth == 12 ) {
+		   setSelectedMonth(1);
+		   setSelectedYear( selectedYear + 1);
+		}
+		else {
+		   setSelectedMonth(selectedMonth + 1 );
+		}
+   }
+
 	// Generate calendar days
 	const calendarDays = generateCalendarDays();
 	
-	// Check if a date is within any event range
-	const isDateInRange = (date: Date) => {
-		return events.some(event =>
-			date >= event.start && date <= event.end
-		);
-	};
+	// // Check if a date is within any event range
+	// const isDateInRange = (date: Date) => {
+	// 	return events.some(event =>
+	// 		date >= event.start && date <= event.end
+	// 	);
+	// };
 
 	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedMonth(parseInt( e.target.value ));
@@ -114,24 +135,27 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 
 	const curDate = new Date();
 	
+	const title = Utils.findItemFromList(months, selectedMonth, "id" );
+
 	return (
 		<div className="w-full h-full items-center justify-center">
-			<h2 className="flex items-center justify-between text-xl font-semibold mb-4 w-full">
+			<h2 className="flex items-center justify-between mb-4 w-full">
 				<div className="flex-1 flex items-center justify-center space-x-8">
 					<div className="cursor-pointer">
-						<IoIosArrowBack />
+						<IoIosArrowBack onClick={(e) => handlePrevBtnClick()} />
 					</div>
 					<div className="cursor-pointer">
-						<select 
+						{title && title.name} {selectedYear}
+						{/* <select 
 						value={selectedMonth}
 						  onChange={handleMonthChange}>
 							{months.map((item, idx) => (
 								<option key={`month_${item.id}`} value={item.id}>{item.name}</option>
 							))}
-						</select>
+						</select> */}
 
 						{/* Year Selector */}
-						<select
+						{/* <select
 							className="p-2 border border-gray-300 rounded"
 							value={selectedYear}
 						  onChange={handleYearChange}
@@ -141,10 +165,10 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 									{year}
 								</option>
 							))}
-						</select>
+						</select>  */}
 					</div>
 					<div className="cursor-pointer">
-						<MdNavigateNext />
+						<MdNavigateNext onClick={() => handleNextBtnClick() }/>
 					</div>
 				</div>
 
@@ -172,12 +196,12 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 									
 								</div>
 								<div className="flex-1 pt-6 items-start">
-									<ul className="list-none space-y-1 text-xs mt-4">
+									<ul className="list-none space-y-1 text-xs mt-4 px-1">
 										{filterEvents(day).length > 0 && 
 											<li className="truncate bg-blue-200 p-1 rounded-sm">{filterEvents(day)[0].title}</li>
 										}
 										{filterEvents(day).length > 1 && 
-											<li className="truncate bg-blue-200 p-1 rounded-sm">More {filterEvents(day).length - 1} event(s)</li>
+											<li className="truncate bg-blue-200 p-1 rounded-sm">More {filterEvents(day).length - 1} event{filterEvents(day).length > 2}</li>
 										}
 									</ul>
 								</div>
