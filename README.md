@@ -48,3 +48,6 @@ Run the build script to transpile your code:
 
 ```bash
 npm run build
+
+``` NPM link
+https://www.npmjs.com/package/nextjs-calendar

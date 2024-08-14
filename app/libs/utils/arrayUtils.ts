@@ -1,4 +1,4 @@
-import { JSONObject } from "../definations";
+import { JSONObject } from "../../definations";
 
 export const findItemFromList = (
   list: any[],

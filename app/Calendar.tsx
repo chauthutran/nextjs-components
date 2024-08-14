@@ -1,4 +1,4 @@
-import { EventType, JSONObject, MonthType } from '@/libs/definations';
+import { EventType, JSONObject, MonthType } from '@/definations';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext, MdToday } from "react-icons/md";
@@ -6,11 +6,7 @@ import { enUS, es, fr, de } from 'date-fns/locale'; // Import your locales
 import { format } from 'date-fns';
 import * as Utils from "@/libs/utils";
 import * as Constants from "@/libs/constants";
-
-
-// Define type for supported locales
-type LocaleType = typeof enUS | typeof es | typeof fr | typeof de;
-
+import { LocaleType } from '@/locales';
 
 // Helper function to generate days of the week
 const generateWeekDays = (locale: LocaleType): string[] => {
