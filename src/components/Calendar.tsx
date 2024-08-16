@@ -1,11 +1,12 @@
-import { EventType, JSONObject, MonthType } from '../libs/definations';
 import React, { useEffect, useRef, useState } from 'react';
+import { EventType, JSONObject, MonthType } from '../libs/definations';
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext, MdToday } from "react-icons/md";
 import { enUS, es, fr, de } from 'date-fns/locale'; // Import your locales
 import { format } from 'date-fns';
 import * as Utils from "../libs/utils";
 import { LocaleType } from '../libs/locales';
+import * as Constant from "../libs/constants";
 
 import styles from './Calendar.module.css';
 
@@ -171,7 +172,7 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 								<div className={styles.eventsContainer}>
 									<ul className={styles.eventItemContainer}>
 										{filterEvents(day).length > 0 &&
-											<li className={styles.eventItem} style={{backgroundColor: filterEvents(day)[0] === undefined ? styles.defaultEventColor : filterEvents(day)[0].color }}>{filterEvents(day)[0].title}</li>
+											<li className={styles.eventItem} style={{backgroundColor: filterEvents(day)[0].color === undefined ? Constant.DEFAULT_COLOR : filterEvents(day)[0].color }}>{filterEvents(day)[0].title} </li>
 										}
 										{filterEvents(day).length > 1 && 
 											<li className={` ${styles.eventItem} ${styles.defaultEventColor}`}>More {filterEvents(day).length - 1} event{filterEvents(day).length > 2 && 's'}</li>
