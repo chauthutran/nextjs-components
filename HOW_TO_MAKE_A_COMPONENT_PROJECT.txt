@@ -77,3 +77,8 @@ publish:
 https://github.com/chauthutran/nextjs-components/settings/secrets/actions
 
 Create: NPM_TOKEN=<npm token>
+
+# Remove the ''dist' and build again
+	> Remove-Item -Recurse -Force dist
+	> npm run build
+

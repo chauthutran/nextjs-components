@@ -1,38 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5", // Targeting ES5 for broad compatibility
-    "module": "esnext", // Use ES modules for modern usage
-    "lib": [
-      "es6",
-      "dom"
-    ], // Include ES6 and DOM libraries
-    "jsx": "preserve", // JSX support for React
-    "strict": true, // Enable all strict type-checking options
-    "esModuleInterop": true, // For compatibility with CommonJS modules
-    "skipLibCheck": true, // Skip type checking of declaration files
-    "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
-    "moduleResolution": "Node",
-    "outDir": "./dist", // Output directory for compiled files
-    "rootDir": "./",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "allowJs": true,
-    "noEmit": true,
-    "incremental": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true
+    "target": "es5",
+    "module": "esnext",
+    "jsx": "preserve",
+    "declaration": true,             // Generates .d.ts files
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",              // Output directory
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "incremental": true      
   },
   "include": [
-    "app",
-    ".next/types/**/*.ts"
-  ],
-  "include_BK": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.*"
   ],
   "exclude": [
     "node_modules",
