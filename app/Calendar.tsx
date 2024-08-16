@@ -8,7 +8,7 @@ import * as Utils from "./libs/utils";
 import * as Constants from "./libs/constants";
 import { LocaleType } from './locales';
 
-import './styles/globals.css';
+// import './styles/globals.css';
 
 
 // Helper function to generate days of the week
@@ -130,7 +130,7 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	const title = Utils.findItemFromList(months, selectedMonth, "id");
 
 	return (
-		<div className={`w-full h-full items-center justify-center`}>
+		<div className={`w-full h-full items-center justify-center bg-red-400`}>
 			<h2 className="flex items-center justify-between mb-4 w-full">
 				<div className="flex-1 flex items-center justify-center space-x-8">
 					<div className="cursor-pointer" onClick={(e) => handlePrevBtnClick()}>

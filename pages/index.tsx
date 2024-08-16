@@ -2,12 +2,17 @@
 import React from 'react';
 // import "./styles/globals.css";
 import Calendar from '../app/Calendar';
+import MyApp from '../app/pages/_app';
+
 
 const TestComponentPage: React.FC = () => {
   return (
     <div>
       <h1>Testing Calendar</h1>
-      <Calendar events={[]} />
+        {/* <MyApp className=""> */}
+          <Calendar events={[]} />
+        {/* </MyApp> */}
+      {/* <Calendar events={[]} /> */}
     </div>
   );
 };
