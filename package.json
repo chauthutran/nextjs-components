@@ -1,6 +1,6 @@
 {
   "name": "nextjs-jc-libs",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "A reusable component for Next.js",
   "scripts": {
     "dev": "next dev",
