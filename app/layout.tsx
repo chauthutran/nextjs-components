@@ -1,23 +1,18 @@
-// import "./globals.css";
 
+import { ReactNode } from 'react';
+import "./globals.css";
 
-
-// export default function RootLayout({
-// 	children,
-// }: Readonly<{
-// 	children: React.ReactNode;
-// }>) {
-// 	return (
-// 		<html lang="en">
-// 			<body >{children}</body>
-// 		</html>
-// 	);
-// }
-
-
-import type { AppProps } from 'next/app';
-import './styles/globals.css';
-
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+interface LayoutProps {
+  children: ReactNode;
 }
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  return (
+    <div>
+      {/* Layout elements like header or sidebar */}
+      {children}
+    </div>
+  );
+};
+
+export default Layout;

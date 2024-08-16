@@ -13,7 +13,7 @@
     "forceConsistentCasingInFileNames": true, // Ensure consistent casing in file names
     "moduleResolution": "Node",
     "outDir": "./dist", // Output directory for compiled files
-    "rootDir": "./app",
+    "rootDir": "./",
     "plugins": [
       {
         "name": "next"
@@ -26,13 +26,13 @@
     "isolatedModules": true
   },
   "include": [
-    "app"
+    "app",
+    ".next/types/**/*.ts"
   ],
   "include_BK": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules",

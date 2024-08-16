@@ -23,13 +23,41 @@
 }
 
 .weekDays {
-    @apply p-1 text-center font-medium text-black border border-gray-300 bg-gray-200 text-sm;
+    @apply p-2 text-center font-bold text-black border border-solid border-gray-300 bg-gray-200 text-sm;
 }
 
-.dayBox {
-    @apply relative border border-gray-300 flex flex-col;
+.calendarBoxContainer {
+    @apply relative border border-solid border-gray-300 flex flex-col;
 }
 
 .bgGray {
-    @apply bg-gray-100;
+    @apply bg-gray-200;
+}
+
+.calendarBox {
+    @apply relative flex flex-col h-[100px];
+}
+
+.dayNumberContainer {
+    @apply absolute top-2 right-2 text-lg text-gray-800;
+}
+
+.eventsContainer {
+    @apply absolute top-2 right-2 text-lg text-gray-800;
+}
+
+.eventItemContainer {
+    @apply list-none space-y-1 text-xs mt-4 px-1;
+}
+
+.eventItem {
+    @apply truncate p-1 rounded-sm
+}
+
+.defaultEventColor {
+    @apply bg-blue-200;
+}
+
+.currentDay {
+    @apply rounded-full bg-blue-300 p-1;
 }

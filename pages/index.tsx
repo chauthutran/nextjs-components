@@ -1,18 +1,12 @@
-// pages/test-component.tsx
 import React from 'react';
-// import "./styles/globals.css";
 import Calendar from '../app/Calendar';
-import MyApp from '../app/pages/_app';
-
 
 const TestComponentPage: React.FC = () => {
   return (
-    <div>
+    <div className="relative border border-gray-900 flex flex-col p-4">
+
       <h1>Testing Calendar</h1>
-        {/* <MyApp className=""> */}
           <Calendar events={[]} />
-        {/* </MyApp> */}
-      {/* <Calendar events={[]} /> */}
     </div>
   );
 };
