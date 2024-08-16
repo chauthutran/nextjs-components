@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-jc-calendar",
-  "version": "0.0.5",
+  "name": "nextjs-jc-libs",
+  "version": "0.0.2",
   "description": "A reusable component for Next.js",
   "scripts": {
     "dev": "next dev",
