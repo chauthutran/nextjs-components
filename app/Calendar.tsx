@@ -8,7 +8,8 @@ import * as Utils from "./libs/utils";
 import * as Constants from "./libs/constants";
 import { LocaleType } from './locales';
 
-import styles  from './Calendar.module.css';
+import './styles/globals.css';
+
 
 // Helper function to generate days of the week
 const generateWeekDays = (locale: LocaleType): string[] => {
@@ -129,36 +130,36 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	const title = Utils.findItemFromList(months, selectedMonth, "id");
 
 	return (
-		<div className={`${styles.container}`}>
-			<h2 className={styles.h2}>
-				<div className={styles.calendarTitle}>
-					<div className={styles.cursorPointer} onClick={(e) => handlePrevBtnClick()}>
+		<div className={`w-full h-full items-center justify-center`}>
+			<h2 className="flex items-center justify-between mb-4 w-full">
+				<div className="flex-1 flex items-center justify-center space-x-8">
+					<div className="cursor-pointer" onClick={(e) => handlePrevBtnClick()}>
 						<IoIosArrowBack />
 					</div>
-					<div className={styles.cursorPointer}>
+					<div className="cursor-pointer">
 						{title && title.name} {selectedYear}
 					</div>
-					<div className={styles.cursorPointer} onClick={() => handleNextBtnClick()}>
+					<div className="cursor-pointer" onClick={() => handleNextBtnClick()}>
 						<MdNavigateNext />
 					</div>
 				</div>
 
 				{/* Right-Aligned Button */}
-				<div className={`${styles.marginRightAuto} ${styles.cursorPointer}`} onClick={() => setCurrentMonth()}>
+				<div className="ml-auto cursor-pointer" onClick={() => setCurrentMonth()}>
 					<MdToday size={24} />
 				</div>
 			</h2>
 
-			<div className={`${styles.calendarGrid}}`}>
+			<div className="grid grid-cols-7">
 				{weekDays.map((day: string) => (
-					<div key={day} className={styles.weekDays}>
+					<div key={day} className="p-1 text-center font-medium text-black border border-gray-300 bg-gray-200 text-sm">
 						{day}
 					</div>
 				))}
 				{calendarDays.map((day, index) => (
 					<div
 						key={index}
-						className={`${styles.dayBox}  ${day ? styles.cursorPointer : styles.bgGray} `}
+						className={`relative border border-gray-300 ${day ? 'cursor-pointer' : 'bg-gray-100'} flex flex-col`}
 					>
 						{day ? (
 							<div className="relative flex flex-col h-[100px]">
