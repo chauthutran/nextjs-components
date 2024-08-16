@@ -1,0 +1,84 @@
+# 1. Generate an NPM Token
+	Log In to Your NPM Account:
+		Go to npmjs.com and log in to your account.
+
+	Generate a New Access Token:
+		Navigate to your account settings by clicking on your profile icon in the top right corner and selecting "Access Tokens" from the dropdown.
+		Click on the "Create New Token" button.
+		Choose the type of token you need:
+			Automation Token: Ideal for CI/CD environments. It has no expiration and can publish packages.
+			Read and Publish Token: Allows both read and publish access to packages.
+		Configure the token scope and permissions as needed, and click "Generate Token."
+		Save the token in a secure place, as you won’t be able to view it again.
+
+# For this progject
+	# 2. Configure Your .npmrc File
+		2.1. Create or Edit .npmrc File:
+			Create or edit the .npmrc file in your project’s root directory or your home directory (usually ~/.npmrc).
+
+		Add the Authentication Token:
+			Add the following line to the .npmrc file, replacing <YOUR_TOKEN> with your actual token:
+				//registry.npmjs.org/:_authToken=<YOUR_TOKEN>
+		This tells NPM to use the provided token for authentication when publishing or accessing packages.
+
+		2.2. For CI/CD Environments
+			Add the Token to Your CI/CD Configuration:
+				Most CI/CD systems have a way to securely store environment variables. Add your NPM token as an environment variable in your CI/CD system’s configuration.
+
+			For example, in GitHub Actions, you might add it to your repository secrets:
+				* Go to your repository on GitHub.
+				* Navigate to "Settings" > "Secrets and variables" > "Actions".
+				* Click "New repository secret" and add a secret named NPM_TOKEN with your token value.
+
+	# 3. Configure Your CI/CD Workflow:
+		In your CI/CD workflow configuration file, use the stored token. For GitHub Actions, you might have a configuration with variable name "NODE_AUTH_TOKEN" like this:
+		******************************************
+name: Publish Package
+
+on:
+push:
+	branches:
+	- main
+
+jobs:
+publish:
+	runs-on: ubuntu-latest
+
+	steps:
+	- name: Checkout code
+		uses: actions/checkout@v3
+
+	- name: Set up Node.js
+		uses: actions/setup-node@v3
+		with:
+		node-version: '14'
+		registry-url: 'https://registry.npmjs.org/'
+
+	- name: Install dependencies
+		run: npm install
+
+	- name: Build
+		run: npm run build
+
+	- name: Publish to NPM
+		env:
+		NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+		run: npm publish
+		******************************************
+4. Publish Your Package
+	From the Component project:
+		> npm publish
+
+
+
+============================================================================================================================
+
+# Project settings in GitHub
+https://github.com/chauthutran/nextjs-components/settings/secrets/actions
+
+Create: NPM_TOKEN=<npm token>
+
+# Remove the ''dist' and build again
+	> Remove-Item -Recurse -Force dist
+	> npm run build
+
