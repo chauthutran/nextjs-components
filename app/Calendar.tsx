@@ -1,12 +1,12 @@
-import { EventType, JSONObject, MonthType } from '@/definations';
+import { EventType, JSONObject, MonthType } from './definations';
 import React, { useEffect, useRef, useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import { MdNavigateNext, MdToday } from "react-icons/md";
 import { enUS, es, fr, de } from 'date-fns/locale'; // Import your locales
 import { format } from 'date-fns';
-import * as Utils from "@/libs/utils";
-import * as Constants from "@/libs/constants";
-import { LocaleType } from '@/locales';
+import * as Utils from "./libs/utils";
+import * as Constants from "./libs/constants";
+import { LocaleType } from './locales';
 
 // Helper function to generate days of the week
 const generateWeekDays = (locale: LocaleType): string[] => {
