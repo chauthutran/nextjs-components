@@ -3,16 +3,25 @@
     "target": "es5",
     "module": "esnext",
     "jsx": "preserve",
-    "declaration": true,             // Generates .d.ts files
+    "declaration": true, // Generates .d.ts files
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",              // Output directory
+    "outDir": "./dist", // Output directory
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "incremental": true      
+    "incremental": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": [
     "src/**/*.ts",

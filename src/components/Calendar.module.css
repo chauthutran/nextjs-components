@@ -43,7 +43,7 @@
 }
 
 .eventsContainer {
-    @apply absolute top-2 right-2 text-lg text-gray-800;
+    @apply mt-6 text-lg text-gray-800;
 }
 
 .eventItemContainer {
