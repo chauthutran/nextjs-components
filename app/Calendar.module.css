@@ -1,0 +1,35 @@
+.container {
+    @apply w-full h-full items-center justify-center;
+}
+
+.h2 {
+    @apply flex items-center justify-between mb-4 w-full;
+}
+
+.calendarTitle {
+    @apply flex-1 flex items-center justify-center space-x-8;
+}
+
+.cursorPointer {
+    @apply cursor-pointer;
+}
+
+.marginRightAuto {
+    @apply ml-auto;
+}
+
+.calendarGrid {
+    @apply grid grid-cols-7;
+}
+
+.weekDays {
+    @apply p-1 text-center font-medium text-black border border-gray-300 bg-gray-200 text-sm;
+}
+
+.dayBox {
+    @apply relative border border-gray-300 flex flex-col;
+}
+
+.bgGray {
+    @apply bg-gray-100;
+}

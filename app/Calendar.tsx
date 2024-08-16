@@ -8,6 +8,8 @@ import * as Utils from "./libs/utils";
 import * as Constants from "./libs/constants";
 import { LocaleType } from './locales';
 
+import styles  from './Calendar.module.css';
+
 // Helper function to generate days of the week
 const generateWeekDays = (locale: LocaleType): string[] => {
 	const weekdays = Array.from({ length: 7 }, (_, i) => i);
@@ -51,7 +53,7 @@ interface CalendarProps {
 }
 
 // Define a default locale
-const defaultLocale: LocaleType = fr;
+const defaultLocale: LocaleType = enUS;
 
 const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) => {
 
@@ -117,14 +119,6 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	// 	);
 	// };
 
-	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedMonth(parseInt(e.target.value));
-	}
-
-	const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedYear(parseInt(e.target.value))
-	}
-
 	const filterEvents = (day: number): EventType[] => {
 		return events.filter(event => event.start.getDate() === day && (event.start.getMonth() + 1) === selectedMonth
 			&& event.start.getFullYear() === selectedYear);
@@ -135,56 +129,36 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	const title = Utils.findItemFromList(months, selectedMonth, "id");
 
 	return (
-		<div className="w-full h-full items-center justify-center">
-			<h2 className="flex items-center justify-between mb-4 w-full">
-				<div className="flex-1 flex items-center justify-center space-x-8">
-					<div className="cursor-pointer" onClick={(e) => handlePrevBtnClick()}>
+		<div className={`${styles.container}`}>
+			<h2 className={styles.h2}>
+				<div className={styles.calendarTitle}>
+					<div className={styles.cursorPointer} onClick={(e) => handlePrevBtnClick()}>
 						<IoIosArrowBack />
 					</div>
-					<div className="cursor-pointer">
+					<div className={styles.cursorPointer}>
 						{title && title.name} {selectedYear}
-						{/* <select 
-						value={selectedMonth}
-						  onChange={handleMonthChange}>
-							{months.map((item, idx) => (
-								<option key={`month_${item.id}`} value={item.id}>{item.name}</option>
-							))}
-						</select> */}
-
-						{/* Year Selector */}
-						{/* <select
-							className="p-2 border border-gray-300 rounded"
-							value={selectedYear}
-						  onChange={handleYearChange}
-						>
-							{years.map(year => (
-								<option key={year} value={year}>
-									{year}
-								</option>
-							))}
-						</select>  */}
 					</div>
-					<div className="cursor-pointer" onClick={() => handleNextBtnClick()}>
+					<div className={styles.cursorPointer} onClick={() => handleNextBtnClick()}>
 						<MdNavigateNext />
 					</div>
 				</div>
 
 				{/* Right-Aligned Button */}
-				<div className="ml-auto cursor-pointer" onClick={() => setCurrentMonth()}>
+				<div className={`${styles.marginRightAuto} ${styles.cursorPointer}`} onClick={() => setCurrentMonth()}>
 					<MdToday size={24} />
 				</div>
 			</h2>
 
-			<div className="grid grid-cols-7">
+			<div className={`${styles.calendarGrid}}`}>
 				{weekDays.map((day: string) => (
-					<div key={day} className="p-1 text-center font-medium text-black border border-gray-300 bg-gray-200 text-sm">
+					<div key={day} className={styles.weekDays}>
 						{day}
 					</div>
 				))}
 				{calendarDays.map((day, index) => (
 					<div
 						key={index}
-						className={`relative border border-gray-300 ${day ? 'cursor-pointer' : 'bg-gray-100'} flex flex-col`}
+						className={`${styles.dayBox}  ${day ? styles.cursorPointer : styles.bgGray} `}
 					>
 						{day ? (
 							<div className="relative flex flex-col h-[100px]">
