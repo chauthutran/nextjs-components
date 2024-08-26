@@ -49,17 +49,20 @@ const getStartDay = (year: number, month: number) => {
 
 
 interface CalendarProps {
-	locale?: LocaleType,
+	locale?: LocaleType;
 	events: EventType[];
+	initMonth?: number;
+	initYear?: number;
+	onClick: (data: JSONObject) => void;
 }
 
 // Define a default locale
 const defaultLocale: LocaleType = enUS;
 
-const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) => {
+const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events, initMonth = 0, initYear = 0, onClick }) => {
 
-	const [selectedMonth, setSelectedMonth] = useState<number>(0);
-	const [selectedYear, setSelectedYear] = useState<number>(0);
+	const [selectedMonth, setSelectedMonth] = useState<number>(initMonth);
+	const [selectedYear, setSelectedYear] = useState<number>(initYear);
 
 	const weekDays = generateWeekDays(locale);
 	const months: JSONObject[] = generateMonths(locale);
@@ -71,7 +74,13 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 	}
 
 	useEffect(() => {
-		setCurrentMonth();
+		if( initMonth === 0 && initYear === 0 ) {
+			setCurrentMonth();
+		}
+		else {
+			setSelectedMonth( initMonth );
+			setSelectedYear( initYear );
+		}
 	}, []);
 
 	const generateCalendarDays = (): (number | null)[] => {
@@ -125,6 +134,10 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 			&& event.start.getFullYear() === selectedYear);
 	}
 
+	const createDate = ( day: number ): Date => {
+		return new Date( selectedYear, selectedMonth - 1, day);
+	}
+
 	const curDate = new Date();
 
 	const title = Utils.findItemFromList(months, selectedMonth, "id");
@@ -170,7 +183,7 @@ const Calendar: React.FC<CalendarProps> = ({ locale = defaultLocale, events }) =
 
 								</div>
 								<div className={styles.eventsContainer}>
-									<ul className={styles.eventItemContainer}>
+									<ul className={styles.eventItemContainer} onClick={(e) => onClick({date: createDate(day), events: filterEvents(day)})}>
 										{filterEvents(day).length > 0 &&
 											<li className={styles.eventItem} style={{backgroundColor: filterEvents(day)[0].color === undefined ? Constant.DEFAULT_COLOR : filterEvents(day)[0].color }}>{filterEvents(day)[0].title} </li>
 										}
